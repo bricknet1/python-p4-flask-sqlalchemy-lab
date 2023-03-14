@@ -20,7 +20,7 @@ def home():
 @app.route('/animal/<int:id>')
 def animal_by_id(id):
     animal = Animal.query.filter(Animal.id == id).first()
-    animal_response = f'<ul><li>ID: {animal.id}</li><li>Name: {animal.name}</li><li>Species: {animal.species}</li><li>Zookeeper: {animal.zookeeper.name}</li><li>Enclosure: {animal.enclosure.environment}</li></ul>'
+    animal_response = f'<ul>ID: {animal.id}</ul><ul>Name: {animal.name}</ul><ul>Species: {animal.species}</ul><ul>Zookeeper: {animal.zookeeper.name}</ul><ul>Enclosure: {animal.enclosure.environment}</ul>'
     response = make_response(
         animal_response,
         200
@@ -30,12 +30,11 @@ def animal_by_id(id):
 @app.route('/zookeeper/<int:id>')
 def zookeeper_by_id(id):
     zookeeper = Zookeeper.query.filter(Zookeeper.id == id).first()
-    zookeeper_response = f'<ul><li>ID: {zookeeper.id}</li><li>Name: {zookeeper.name}</li><li>Birthday: {zookeeper.birthday}</li>'
+    zookeeper_response = f'<ul>ID: {zookeeper.id}</ul><ul>Name: {zookeeper.name}</ul><ul>Birthday: {zookeeper.birthday}</ul>'
     # import ipdb; ipdb.set_trace()
     animals = Animal.query.filter(Animal.zookeeper_id == id).all()
     for each in animals:
-        zookeeper_response += f'<li>Animal: {each.name}</li>'
-    zookeeper_response += '</ul>'
+        zookeeper_response += f'<ul>Animal: {each.name}</ul>'
     response = make_response(
         zookeeper_response,
         200
@@ -45,12 +44,11 @@ def zookeeper_by_id(id):
 @app.route('/enclosure/<int:id>')
 def enclosure_by_id(id):
     enclosure = Enclosure.query.filter(Enclosure.id == id).first()
-    enclosure_response = f'<ul><li>ID: {enclosure.id}</li><li>Environment: {enclosure.environment}</li><li>Open to Visitors: {enclosure.open_to_visitors}</li>'
+    enclosure_response = f'<ul>ID: {enclosure.id}</ul><ul>Environment: {enclosure.environment}</ul><ul>Open to Visitors: {enclosure.open_to_visitors}</ul>'
     # import ipdb; ipdb.set_trace()
     animals = Animal.query.filter(Animal.enclosure_id == id).all()
     for each in animals:
-        enclosure_response += f'<li>Animal: {each.name}</li>'
-    enclosure_response += '</ul>'
+        enclosure_response += f'<ul>Animal: {each.name}</ul>'
     response = make_response(
         enclosure_response,
         200
